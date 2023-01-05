@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "firstAjax";
+}
+<div>
+    <h2>First Ajax</h2>
+    <input type="text" id="txtName" />
+    <button class="btn btn-primary" id="btn1">click</button>
+    <div class="mt-3 p-3 w-25 alert-info" id="div1"></div>
+</div>
+
+@section Scripts{
+    <script>
+        let xhr=new XMLHttpRequest();
+        let div1 = document.getElementById('div1');
+        let btn1 = document.getElementById('btn1');
+        let txtName = document.getElementById('txtName');
+        
+        
+        btn1.addEventListener('click',()=>{
+            xhr.addEventListener('load', () => {
+                let data = xhr.responseText;
+                console.log(data);
+                div1.innerHTML = data;
+
+            });
+            xhr.open('GET', `/api/Index?name=${txtName.value}`);
+            xhr.send();
+        });
+       
+        
+    </script>
+}

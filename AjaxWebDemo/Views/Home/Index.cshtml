@@ -3,6 +3,77 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div id="showInfo">
+        <div class="card">
+            <div class="card-header">
+                Featured
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Featured
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+    
 </div>
+@*<ul id="myUL"></ul>*@
+
+@section Scripts{
+    <script>
+        const emp = {
+            "employees": [
+                { "name": "Tom", "workYears": 3, "salary": 35000 },
+                { "name": "Jack", "workYears": 5, "salary": 40000 },
+                { "name": "Mary", "workYears": 7, "salary": 45000 }
+            ]
+        };
+
+
+        //$(emp).each(function (key, value) {
+        //    $(value.employees).each(function (i, person) {
+        //        $('#myUL').append('<li>' + person.name + '</li>');
+        //        //console.log(person.name);
+        //        //console.log(person.workYears);
+        //        //console.log(person.salary);
+        //    });
+        //});
+
+        emp.employees.forEach(function(value,index,array){
+            const { name, workYears, salary }=value;
+            //console.log(name);
+            document.getElementById('myUL').innerHTML+=`<li>${name}</li>`;
+        });
+
+        //array.map()會return一個新的array
+        let datas = emp.employees.map(function (value, index, array) { 
+            const { name, workYears, salary }=value;
+            return `<li>${name}-${salary}</li>`;
+            //console.log(value);
+        });
+        document.getElementById('myUL').innerHTML+=datas.join('');//array.join()用join()中的字元當作分隔把陣列元素組成一個新的字串(string)
+
+    </script>
+}
+@section Styles{
+    <style>
+        #showInfo{
+            display:flex;
+            padding:10px;
+        }
+
+        #showInfo .card {
+            margin:10px;
+        }
+    </style>
+}
