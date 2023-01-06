@@ -7,10 +7,12 @@ namespace AjaxWebDemo.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DemoContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, DemoContext db)
         {
             _logger = logger;
+            _db = db;
         }
 
         public IActionResult Index()
@@ -31,6 +33,11 @@ namespace AjaxWebDemo.Controllers
         public IActionResult firstAjax()
         {
             return View();
+        }
+
+        public IActionResult members()
+        {
+            return View(_db.Members);
         }
     }
 }

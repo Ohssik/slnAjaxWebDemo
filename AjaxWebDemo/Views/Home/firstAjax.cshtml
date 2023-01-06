@@ -4,7 +4,8 @@
 <div>
     <h2>First Ajax</h2>
     <input type="text" id="txtName" />
-    <button class="btn btn-primary" id="btn1">click</button>
+    <button class="btn btn-primary" id="btn1">開始</button>
+    <button class="btn btn-danger" id="btn2">停止</button>
     <div class="mt-3 p-3 w-25 alert-info" id="div1"></div>
 </div>
 
@@ -13,20 +14,47 @@
         let xhr=new XMLHttpRequest();
         let div1 = document.getElementById('div1');
         let btn1 = document.getElementById('btn1');
+        let btn2 = document.getElementById('btn2');
         let txtName = document.getElementById('txtName');
-        
-        
-        btn1.addEventListener('click',()=>{
-            xhr.addEventListener('load', () => {
-                let data = xhr.responseText;
-                console.log(data);
-                div1.innerHTML = data;
 
-            });
+        //Ajax開始事件
+        xhr.addEventListener('loadstart', () => {
+            btn1.innerHTML = '執行中...';
+            div1.innerHTML+='Ajax開始<br>';
+            btn1.setAttribute('disabled', 'disabled');
+        });
+
+        //Ajax結束事件
+        xhr.addEventListener('loadend', () => {
+            btn1.innerHTML = '開始';
+            div1.innerHTML += 'Ajax結束<br>';
+            btn1.removeAttribute('disabled');
+            txtName.value='';
+        });
+
+        //Ajax中止事件
+        xhr.addEventListener('abort',()=>{            
+            div1.innerHTML+='程式中止<br>';
+            btn1.innerHTML = '開始';
+            btn1.removeAttribute('disabled');
+        });
+
+        xhr.addEventListener('load', () => {
+            let data = xhr.responseText;
+            //console.log(data);
+            div1.innerHTML += data + '<br>';
+
+        });
+
+        btn1.addEventListener('click',()=>{
+            
             xhr.open('GET', `/api/Index?name=${txtName.value}`);
+            xhr.timeout = 10000;//timeout設定在open()和send()之間
             xhr.send();
         });
-       
+        btn2.addEventListener('click', () => {
+            xhr.abort();
+        });
         
     </script>
 }
