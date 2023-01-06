@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" id="txtName" class="form-control" />
-                <span id="checkResult" style="color:red"></span>
+                <span id="checkResult"></span>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -62,7 +62,7 @@
         }
 
         .accountNotExisted{
-            color:lightgreen;
+            color:green;
         }
     </style>
 }
@@ -90,6 +90,9 @@
 
         txtName.addEventListener('change',()=>{
             checkResult.innerHTML = '';
+            if (txtName.value.trim()=='')
+                return false;
+           
            xhr.open('POST', '/api/NameCheck');
            xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
            xhr.send(`name=${txtName.value}`);
