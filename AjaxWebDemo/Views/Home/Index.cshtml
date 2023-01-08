@@ -6,22 +6,22 @@
     <div id="showInfo">
         <div class="card">
             <div class="card-header">
-                Featured
+                上課範例練習
             </div>
             <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                
+                <p class="card-text">@Html.ActionLink("members","members","Home",null,new {@class="btn btn-primary"})</p>
+                <p class="card-text">@Html.ActionLink("firstAjax","firstAjax","Home",null,new {@class="btn btn-primary"})</p>
             </div>
         </div>
         <div class="card">
             <div class="card-header">
-                Featured
+                作業區
             </div>
             <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <p class="card-text">@Html.ActionLink("作業一","Travel","Homework",null,new {@class="btn btn-primary"})</p>
+                <p class="card-text">@Html.ActionLink("作業二","Register","Homework",null,new {@class="btn btn-primary"})</p>
+
             </div>
         </div>
     </div>
@@ -74,6 +74,7 @@
 
         #showInfo .card {
             margin:10px;
+            width:50%;
         }
     </style>
 }

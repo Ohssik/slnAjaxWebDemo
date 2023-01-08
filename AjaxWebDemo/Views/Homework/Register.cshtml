@@ -12,11 +12,15 @@
         <form asp-action="Register">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                @*@{
-                    int newId = Model.MemberId+1;
-                    string _newId = newId.ToString();
+                @{
+                    string _newId = "";
+                    if (ViewData["newId"] != null)
+                    {
+                        int newId = (int)ViewData["newId"];
+                        _newId = newId.ToString();
+                    }
                 }
-                <input asp-for="MemberId" type="text" name="MemberId" value=@_newId class="form-control" />*@
+                <input asp-for="MemberId" type="hidden" name="MemberId" value=@_newId class="form-control" />
                 
             </div>
             <div class="form-group">
@@ -57,11 +61,11 @@
 </div>
 @section Styles{
     <style>
-        .accountExisted{
+        .nameExisted{
             color:red;
         }
 
-        .accountNotExisted{
+        .nameNotExisted{
             color:green;
         }
     </style>
@@ -79,12 +83,12 @@
            console.log(result);
            if(result=='1'){
                 checkResult.innerHTML='該帳號已存在';
-                checkResult.classList.add('accountExisted');
-                checkResult.classList.remove('accountNotExisted');
+                checkResult.classList.add('nameExisted');
+                checkResult.classList.remove('nameNotExisted');
            }else{
                 checkResult.innerHTML = '該帳號可註冊';
-                checkResult.classList.add('accountNotExisted');
-                checkResult.classList.remove('accountExisted');
+                checkResult.classList.add('nameNotExisted');
+                checkResult.classList.remove('nameExisted');
            }
        });
 
@@ -92,10 +96,13 @@
             checkResult.innerHTML = '';
             if (txtName.value.trim()=='')
                 return false;
+
            
            xhr.open('POST', '/api/NameCheck');
            xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
            xhr.send(`name=${txtName.value}`);
+            //xhr.send();
+
         });
        
    </script>
