@@ -12,6 +12,9 @@
                 
                 <p class="card-text">@Html.ActionLink("members","members","Home",null,new {@class="btn btn-primary"})</p>
                 <p class="card-text">@Html.ActionLink("firstAjax","firstAjax","Home",null,new {@class="btn btn-primary"})</p>
+                <p class="card-text">@Html.ActionLink("檔案上傳和儲存","Register","Homework",null,new {@class="btn btn-primary"})</p>
+                <p class="card-text">@Html.ActionLink("address","address","Home",null,new {@class="btn btn-primary"})</p>
+                <p class="card-text">@Html.ActionLink("fetch","fetch","Home",null,new {@class="btn btn-primary"})</p>
             </div>
         </div>
         <div class="card">
@@ -21,6 +24,7 @@
             <div class="card-body">
                 <p class="card-text">@Html.ActionLink("作業一","Travel","Homework",null,new {@class="btn btn-primary"})</p>
                 <p class="card-text">@Html.ActionLink("作業二","Register","Homework",null,new {@class="btn btn-primary"})</p>
+                <p class="card-text">@Html.ActionLink("作業三","Address","Homework",null,new {@class="btn btn-primary"})</p>
 
             </div>
         </div>
@@ -49,11 +53,11 @@
         //    });
         //});
 
-        emp.employees.forEach(function(value,index,array){
-            const { name, workYears, salary }=value;
-            //console.log(name);
-            document.getElementById('myUL').innerHTML+=`<li>${name}</li>`;
-        });
+        //emp.employees.forEach(function(value,index,array){
+        //    const { name, workYears, salary }=value;
+        //    //console.log(name);
+        //    document.getElementById('myUL').innerHTML+=`<li>${name}</li>`;
+        //});
 
         //array.map()會return一個新的array
         let datas = emp.employees.map(function (value, index, array) { 
@@ -61,7 +65,7 @@
             return `<li>${name}-${salary}</li>`;
             //console.log(value);
         });
-        document.getElementById('myUL').innerHTML+=datas.join('');//array.join()用join()中的字元當作分隔把陣列元素組成一個新的字串(string)
+        //document.getElementById('myUL').innerHTML+=datas.join('');//array.join()用join()中的字元當作分隔把陣列元素組成一個新的字串(string)
 
     </script>
 }

@@ -48,7 +48,9 @@
 
         btn1.addEventListener('click',()=>{
             
-            xhr.open('GET', `/api/Index?name=${txtName.value}`);
+            //xhr.open('GET', `/api/Index?name=${txtName.value}`);
+            xhr.open('GET', `@Url.Content("~/api/Index?name=${txtName.value}")`);
+
             xhr.timeout = 10000;//timeout設定在open()和send()之間
             xhr.send();
         });

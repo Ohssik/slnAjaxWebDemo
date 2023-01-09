@@ -39,5 +39,14 @@ namespace AjaxWebDemo.Controllers
         {
             return View(_db.Members);
         }
+
+        public IActionResult address()
+        {
+            return View();
+        }
+        public IActionResult fetch()
+        {
+            return View();
+        }
     }
 }

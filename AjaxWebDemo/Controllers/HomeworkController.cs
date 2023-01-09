@@ -25,5 +25,9 @@ namespace AjaxWebDemo.Controllers
             ViewData["newId"]=newId;
             return View();
         }
+        public IActionResult Address()
+        {
+            return View();
+        }
     }
 }

@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewData["Title"] = "Address";
+}
+
+<h1>Addresflex</h1>
+<hr />
+<div id="show">
+    <select class="form-select" id="citySelect" aria-label="Default select example"></select>
+    <select class="form-select" id="siteSelect" aria-label="Default select example"></select>
+    <select class="form-select" id="roadSelect" aria-label="Default select example"></select>
+</div>
+@section Scripts{
+    <script>
+        let citySelect = document.getElementById('citySelect');
+        let siteSelect = document.getElementById('siteSelect');
+        let roadSelect = document.getElementById('roadSelect');
+
+
+        async function asyncFuncCity(){
+            try{
+                let response = await fetch('@Url.Content("~/api/city")');
+                let datas=await response.text();
+                
+                let cities = JSON.parse(datas);
+                let Ops = cities.map((value) => {
+                    return `<option value=${value}>${value}</option>`
+                });
+                citySelect.innerHTML = Ops.join('');
+                asyncFuncSite();
+                asyncFuncRoad();
+            }catch(err){
+                console.log(`city load error: ${err}`);
+            }
+        }        
+        async function asyncFuncSite() {
+            try {
+                let response = await fetch(`@Url.Content("~/api/site?city=${citySelect.options[citySelect.selectedIndex].value}")`);
+                let datas = await response.text();
+                
+                let sites = JSON.parse(datas);
+                let Ops = sites.map((value) => {
+                    return `<option value=${value}>${value}</option>`
+                });
+                siteSelect.innerHTML = Ops.join('');
+                asyncFuncRoad();
+            } catch (err) {
+                console.log(`site load error: ${err}`);
+            }
+        }
+        async function asyncFuncRoad() {
+            try {
+                let response = await fetch(`@Url.Content("~/api/road?site=${siteSelect.options[siteSelect.selectedIndex].value}")`);
+                let datas = await response.text();
+                
+                let roads = JSON.parse(datas);
+                let Ops = roads.map((value) => {
+                    return `<option value=${value}>${value}</option>`
+                });
+                roadSelect.innerHTML = Ops.join('');
+            } catch (err) {
+                console.log(`road load error: ${err}`);
+            }
+        }
+        asyncFuncCity();
+        
+        citySelect.addEventListener('change', () => {
+            asyncFuncSite();            
+        });
+        siteSelect.addEventListener('change', () => {
+            asyncFuncRoad();
+        });
+        
+
+    </script>
+}
+@section Styles{
+    <style>
+        #show{
+            display:flex            
+        }
+
+        #show select{
+            width:33%;
+            margin: 0 10px;
+        }
+    </style>
+}
+

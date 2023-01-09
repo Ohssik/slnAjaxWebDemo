@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewData["Title"] = "address";
+}
+
+<h1>address</h1>
+<select id="citySelect"></select>
+<select id="siteSelect"></select>
+<select id="roadSelect"></select>
+@section Scripts{
+    <script>
+        let citySelect = document.getElementById('citySelect');
+        let siteSelect = document.getElementById('siteSelect');
+        let roadSelect = document.getElementById('roadSelect');
+        //(function(){
+            let xhr=new XMLHttpRequest();
+            xhr.addEventListener('load',()=>{
+                let datas = JSON.parse(xhr.responseText);
+                //console.log(datas);
+                let cityOps=datas.map((value)=>{
+                    return `<option value=${value}>${value}</option>`
+                });
+                //console.log(cityOps);
+                citySelect.innerHTML = cityOps.join('');
+            });
+
+
+            xhr.open('GET','@Url.Content("~/api/city")');
+            xhr.send();
+        //})();
+
+        let xhr2 = new XMLHttpRequest();
+        xhr2.addEventListener('load', () => {
+            let datas = JSON.parse(xhr2.responseText);
+            //console.log(datas);
+            let Ops = datas.map((value) => {
+                return `<option value=${value}>${value}</option>`
+            });
+            //console.log(cityOps);
+            siteSelect.innerHTML = Ops.join('');
+        });
+        citySelect.addEventListener('change',()=>{
+            roadSelect.innerHTML='';
+            console.log(citySelect.options[citySelect.selectedIndex].value);
+            xhr2.open('GET', `@Url.Content("~/api/site?city=${citySelect.options[citySelect.selectedIndex].value}")`);
+            xhr2.send();
+        });
+
+        let xhr3 = new XMLHttpRequest();
+        xhr3.addEventListener('load', () => {
+            let datas = JSON.parse(xhr3.responseText);
+            //console.log(datas);
+            let Ops = datas.map((value) => {
+                return `<option value=${value}>${value}</option>`
+            });
+            //console.log(cityOps);
+            roadSelect.innerHTML = Ops.join('');
+        });
+        siteSelect.addEventListener('change', () => {
+            console.log(siteSelect.options[siteSelect.selectedIndex].value);
+            xhr3.open('GET', `@Url.Content("~/api/road?site=${siteSelect.options[siteSelect.selectedIndex].value}")`);
+            xhr3.send();
+        });
+    </script>
+}
