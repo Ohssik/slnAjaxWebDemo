@@ -20,15 +20,14 @@
         async function asyncFuncCity(){
             try{
                 let response = await fetch('@Url.Content("~/api/city")');
-                let datas=await response.text();
+                let cities = await response.json();
                 
-                let cities = JSON.parse(datas);
                 let Ops = cities.map((value) => {
                     return `<option value=${value}>${value}</option>`
                 });
                 citySelect.innerHTML = Ops.join('');
                 asyncFuncSite();
-                asyncFuncRoad();
+                
             }catch(err){
                 console.log(`city load error: ${err}`);
             }
@@ -36,9 +35,8 @@
         async function asyncFuncSite() {
             try {
                 let response = await fetch(`@Url.Content("~/api/site?city=${citySelect.options[citySelect.selectedIndex].value}")`);
-                let datas = await response.text();
+                let sites = await response.json();
                 
-                let sites = JSON.parse(datas);
                 let Ops = sites.map((value) => {
                     return `<option value=${value}>${value}</option>`
                 });
@@ -51,9 +49,8 @@
         async function asyncFuncRoad() {
             try {
                 let response = await fetch(`@Url.Content("~/api/road?site=${siteSelect.options[siteSelect.selectedIndex].value}")`);
-                let datas = await response.text();
-                
-                let roads = JSON.parse(datas);
+                let roads = await response.json();
+                                
                 let Ops = roads.map((value) => {
                     return `<option value=${value}>${value}</option>`
                 });
@@ -62,9 +59,10 @@
                 console.log(`road load error: ${err}`);
             }
         }
+
         asyncFuncCity();
         
-        citySelect.addEventListener('change', () => {
+        citySelect.addEventListener('change', ()=>{
             asyncFuncSite();            
         });
         siteSelect.addEventListener('change', () => {
