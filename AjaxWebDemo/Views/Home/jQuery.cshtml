@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewData["Title"] = "jQuery";
+}
+
+<h1>jQuery</h1>
+<hr />
+<div class="row">
+    <div class="col-3">
+        
+    </div>
+    <div class="col-6">
+        <button id="buttonGet" class="btn btn-primary">get</button>
+        <button id="buttonPost" class="btn btn-secondary">post</button>
+        <button id="buttonJson" class="btn btn-success">getJson</button>
+        <button id="buttonLoad" class="btn btn-info">load</button>
+        <button id="buttonAjax" class="btn btn-warning">ajax</button>
+        <button id="buttonCors" class="btn btn-danger">cors</button>
+        <div class="alert alert-dark mt-3 w-50" role="alert" id="divAlert"></div>
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script>
+        $('.col-3').load(`@Url.Content("~/home/partial")`);
+
+        $('#buttonGet').click(function () {
+            //$('#divAlert').text("GET")
+            $.get(`@Url.Content("~/api/Index")`,{"name":"tom","age":44},function(data){
+                $('#divAlert').html(data);
+            })
+        })
+        $('#buttonPost').click(function () {
+            //$('#divAlert').text("POST")
+            $.post(`@Url.Content("~/api/Index")`, { "name": "tom", "age": 44 }, function (data) {
+                $('#divAlert').html(data);
+            })
+        })
+        $('#buttonJson').click(function () {
+            $.getJSON('@Url.Content("~/api/site")',{"city":"南投縣"},function(data){
+                let docFrag=document.createDocumentFragment();
+                
+                $(data).each(function(i,site){                    
+                    let s=$('<p></p>').text(site);                    
+                    $(docFrag).append(s);                   
+                });
+                $('#divAlert').append(docFrag);
+            });
+            
+        })
+        $('#buttonLoad').click(function () {
+            $('#divAlert').text("LOAD")
+        })
+        $('#buttonAjax').click(function () {
+            $.ajax({
+                url: `@Url.Content("~/api/site")`,
+                type:"post",
+                data:{
+                    "city": "彰化縣"
+                },
+                dataType: "json",
+                success: function (datas) {
+                    let docFrag = document.createDocumentFragment();
+                    $(datas).each(function (i, site) {
+                        let s = $('<p></p>').text(site);
+                        $(docFrag).append(s);
+                    });
+                    $('#divAlert').append(docFrag);
+                }
+            });
+            
+        })
+        $('#buttonCors').click(function () {
+            $('#divAlert').text("CORs")
+        })
+
+    </script>
+}

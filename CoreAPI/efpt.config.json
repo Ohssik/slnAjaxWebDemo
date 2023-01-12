@@ -1,0 +1,136 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "ispan-msit145-shibaContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "CoreAPI",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[AdImg]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AdminMember]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[BusinessImg]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[BusinessMember]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Coupons]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NormalMember]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OptionsToProducts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OrderDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OrderItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Orders]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OrderSerialNumber]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PaymentTerm2BusiMember]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PaymentTermCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductImg]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductOptionGroup]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductOptions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Products]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sysdiagrams]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[View_OptionsToGroups]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[View_OrderDetail_NonOptionGroupName]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[View_OrderDetail_with_OptionGroupName]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[View_OrderDetailList]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[View_showProductList]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[udf_get_serialno]",
+         "ObjectType": 2
+      }
+   ],
+   "UiHint": "ispan-msit145-shiba2.ispanMsit145shiba",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

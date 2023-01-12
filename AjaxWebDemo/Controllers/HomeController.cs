@@ -48,5 +48,14 @@ namespace AjaxWebDemo.Controllers
         {
             return View();
         }
+        public IActionResult jQuery()
+        {
+            return View();
+        }
+        public IActionResult partial()
+        {
+            ViewBag.data = "hi, partialView";
+            return PartialView(_db.Members);
+        }
     }
 }

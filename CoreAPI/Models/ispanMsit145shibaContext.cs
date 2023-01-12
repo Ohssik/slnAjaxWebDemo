@@ -3,36 +3,41 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace AjaxWebDemo.Models1
+namespace CoreAPI.Models
 {
-    public partial class iSpan_ProjectContext : DbContext
+    public partial class ispanMsit145shibaContext : DbContext
     {
-        public iSpan_ProjectContext()
+        public ispanMsit145shibaContext()
         {
         }
 
-        public iSpan_ProjectContext(DbContextOptions<iSpan_ProjectContext> options)
+        public ispanMsit145shibaContext(DbContextOptions<ispanMsit145shibaContext> options)
             : base(options)
         {
         }
 
         public virtual DbSet<AdImg> AdImgs { get; set; } = null!;
+        public virtual DbSet<AdminMember> AdminMembers { get; set; } = null!;
         public virtual DbSet<BusinessImg> BusinessImgs { get; set; } = null!;
         public virtual DbSet<BusinessMember> BusinessMembers { get; set; } = null!;
-        public virtual DbSet<Menu> Menus { get; set; } = null!;
-        public virtual DbSet<MenuDetail> MenuDetails { get; set; } = null!;
+        public virtual DbSet<Coupon> Coupons { get; set; } = null!;
+        public virtual DbSet<Coupon2NormalMember> Coupon2NormalMembers { get; set; } = null!;
         public virtual DbSet<NormalMember> NormalMembers { get; set; } = null!;
         public virtual DbSet<OptionsToProduct> OptionsToProducts { get; set; } = null!;
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<OrderDetail> OrderDetails { get; set; } = null!;
+        public virtual DbSet<OrderItem> OrderItems { get; set; } = null!;
         public virtual DbSet<OrderSerialNumber> OrderSerialNumbers { get; set; } = null!;
-        public virtual DbSet<PaymentTerm> PaymentTerms { get; set; } = null!;
+        public virtual DbSet<PaymentTerm2BusiMember> PaymentTerm2BusiMembers { get; set; } = null!;
+        public virtual DbSet<PaymentTermCategory> PaymentTermCategories { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<ProductCategory> ProductCategories { get; set; } = null!;
         public virtual DbSet<ProductImg> ProductImgs { get; set; } = null!;
         public virtual DbSet<ProductOption> ProductOptions { get; set; } = null!;
         public virtual DbSet<ProductOptionGroup> ProductOptionGroups { get; set; } = null!;
+        public virtual DbSet<Sysdiagram> Sysdiagrams { get; set; } = null!;
         public virtual DbSet<ViewOptionsToGroup> ViewOptionsToGroups { get; set; } = null!;
+        public virtual DbSet<ViewOrderDetailList> ViewOrderDetailLists { get; set; } = null!;
         public virtual DbSet<ViewOrderDetailNonOptionGroupName> ViewOrderDetailNonOptionGroupNames { get; set; } = null!;
         public virtual DbSet<ViewOrderDetailWithOptionGroupName> ViewOrderDetailWithOptionGroupNames { get; set; } = null!;
         public virtual DbSet<ViewShowProductList> ViewShowProductLists { get; set; } = null!;
@@ -42,7 +47,7 @@ namespace AjaxWebDemo.Models1
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=iSpan_Project;Integrated Security=True;TrustServerCertificate=true;");
+                optionsBuilder.UseSqlServer("Server=tcp:ispan-msit145-shiba2.database.windows.net,1433;Initial Catalog=ispanMsit145shiba;Persist Security Info=False;User ID=msit145Shiba;Password=sh1baMsite45;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;");
             }
         }
 
@@ -50,19 +55,17 @@ namespace AjaxWebDemo.Models1
         {
             modelBuilder.Entity<AdImg>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Fid);
 
                 entity.ToTable("AdImg");
+
+                entity.Property(e => e.Fid).HasColumnName("fid");
 
                 entity.Property(e => e.BFid).HasColumnName("B_fid");
 
                 entity.Property(e => e.EndTime)
                     .HasColumnType("datetime")
                     .HasColumnName("endTime");
-
-                entity.Property(e => e.Fid)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("fid");
 
                 entity.Property(e => e.Hyperlink)
                     .HasMaxLength(50)
@@ -72,9 +75,28 @@ namespace AjaxWebDemo.Models1
                     .HasMaxLength(50)
                     .HasColumnName("imgName");
 
+                entity.Property(e => e.OrderBy).HasColumnName("orderBy");
+
                 entity.Property(e => e.StartTime)
                     .HasColumnType("datetime")
                     .HasColumnName("startTime");
+            });
+
+            modelBuilder.Entity<AdminMember>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("AdminMember");
+
+                entity.Property(e => e.Account).HasMaxLength(50);
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Password).HasMaxLength(50);
+
+                entity.Property(e => e.RoleLevel).HasColumnName("roleLevel");
             });
 
             modelBuilder.Entity<BusinessImg>(entity =>
@@ -87,28 +109,25 @@ namespace AjaxWebDemo.Models1
 
                 entity.Property(e => e.BFid).HasColumnName("B_fid");
 
-                entity.Property(e => e.BannerImgPath1)
+                entity.Property(e => e.BannerImgFileName1)
                     .HasMaxLength(50)
-                    .HasColumnName("Banner_ImgPath_1")
-                    .HasDefaultValueSql("(N'../../img/BusinessMember_Img/default_banner001.png')");
+                    .HasColumnName("Banner_ImgFileName_1");
 
-                entity.Property(e => e.BannerImgPath2)
+                entity.Property(e => e.BannerImgFileName2)
                     .HasMaxLength(50)
-                    .HasColumnName("Banner_ImgPath_2");
+                    .HasColumnName("Banner_ImgFileName_2");
 
-                entity.Property(e => e.BannerImgPath3)
+                entity.Property(e => e.BannerImgFileName3)
                     .HasMaxLength(50)
-                    .HasColumnName("Banner_ImgPath_3");
+                    .HasColumnName("Banner_ImgFileName_3");
 
-                entity.Property(e => e.LogoImgPath)
+                entity.Property(e => e.LogoImgFileName)
                     .HasMaxLength(50)
-                    .HasColumnName("LOGO_ImgPath")
-                    .HasDefaultValueSql("(N'../../img/default/BMember_Icon.png')");
+                    .HasColumnName("LOGO_ImgFileName");
 
-                entity.Property(e => e.SighImgPath)
+                entity.Property(e => e.SighImgFileName)
                     .HasMaxLength(50)
-                    .HasColumnName("SIgh_ImgPath")
-                    .HasDefaultValueSql("(N'../../img/BusinessMember_Img/default_sign001.png')");
+                    .HasColumnName("SIgh_ImgFileName");
             });
 
             modelBuilder.Entity<BusinessMember>(entity =>
@@ -123,58 +142,65 @@ namespace AjaxWebDemo.Models1
 
                 entity.Property(e => e.Brand).HasMaxLength(50);
 
-                entity.Property(e => e.CloseTime).HasMaxLength(50);
-
                 entity.Property(e => e.ContactPerson).HasMaxLength(50);
-
-                entity.Property(e => e.DeliveryAmount).HasColumnType("numeric(18, 2)");
 
                 entity.Property(e => e.Email).HasMaxLength(50);
 
-                entity.Property(e => e.MemberId)
-                    .HasMaxLength(50)
-                    .HasColumnName("MemberID");
+                entity.Property(e => e.EmailCertified)
+                    .HasColumnName("emailCertified")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Gps)
+                    .HasMaxLength(300)
+                    .HasColumnName("GPS");
+
+                entity.Property(e => e.IsSuspensed)
+                    .HasColumnName("isSuspensed")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.MemberAccount).HasMaxLength(50);
 
                 entity.Property(e => e.MemberName).HasMaxLength(50);
-
-                entity.Property(e => e.OpenTime).HasMaxLength(50);
 
                 entity.Property(e => e.Password).HasMaxLength(50);
 
                 entity.Property(e => e.Phone).HasMaxLength(50);
 
-                entity.Property(e => e.RegisterTime).HasColumnType("datetime");
+                entity.Property(e => e.RegisterTime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.ShopType).HasMaxLength(50);
             });
 
-            modelBuilder.Entity<Menu>(entity =>
+            modelBuilder.Entity<Coupon>(entity =>
             {
-                entity.HasKey(e => e.Fid)
-                    .HasName("PK_Menu_1");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Fid).HasColumnName("fid");
+                entity.Property(e => e.CouponCode)
+                    .HasMaxLength(100)
+                    .HasColumnName("couponCode");
 
-                entity.Property(e => e.BFid).HasColumnName("B_fid");
+                entity.Property(e => e.IsUsed)
+                    .HasColumnName("isUsed")
+                    .HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.IsForSale)
-                    .HasMaxLength(1)
-                    .HasColumnName("isForSale");
+                entity.Property(e => e.Memo)
+                    .HasMaxLength(50)
+                    .HasColumnName("memo");
 
-                entity.Property(e => e.Memo).HasMaxLength(100);
-
-                entity.Property(e => e.MenuName).HasMaxLength(50);
+                entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
             });
 
-            modelBuilder.Entity<MenuDetail>(entity =>
+            modelBuilder.Entity<Coupon2NormalMember>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToTable("MenuDetail");
+                entity.ToTable("Coupon2NormalMember");
 
-                entity.Property(e => e.MenuFid).HasColumnName("Menu_fid");
+                entity.Property(e => e.CouponId).HasColumnName("couponId");
 
-                entity.Property(e => e.ProductFid).HasColumnName("Product_fid");
+                entity.Property(e => e.MemberId).HasColumnName("memberId");
             });
 
             modelBuilder.Entity<NormalMember>(entity =>
@@ -193,7 +219,7 @@ namespace AjaxWebDemo.Models1
                     .HasMaxLength(50)
                     .HasColumnName("Address_City");
 
-                entity.Property(e => e.Birthday).HasColumnType("datetime");
+                entity.Property(e => e.Birthday).HasColumnType("date");
 
                 entity.Property(e => e.Email).HasMaxLength(50);
 
@@ -203,17 +229,13 @@ namespace AjaxWebDemo.Models1
 
                 entity.Property(e => e.Gender).HasMaxLength(10);
 
-                entity.Property(e => e.IsSuspension)
-                    .HasColumnName("isSuspension")
+                entity.Property(e => e.IsSuspensed)
+                    .HasColumnName("isSuspensed")
                     .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.MemberAccount).HasMaxLength(50);
 
                 entity.Property(e => e.MemberName).HasMaxLength(50);
 
-                entity.Property(e => e.MemberPhotoFile)
-                    .HasMaxLength(50)
-                    .HasDefaultValueSql("(N'../../img/default/NMember_Icon.png')");
+                entity.Property(e => e.MemberPhotoFile).HasMaxLength(50);
 
                 entity.Property(e => e.Password).HasMaxLength(50);
 
@@ -222,12 +244,6 @@ namespace AjaxWebDemo.Models1
                 entity.Property(e => e.RegisterTime)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Sn)
-                    .HasMaxLength(15)
-                    .HasColumnName("SN")
-                    .HasDefaultValueSql("([dbo].[udf_get_serialno]())")
-                    .IsFixedLength();
             });
 
             modelBuilder.Entity<OptionsToProduct>(entity =>
@@ -241,8 +257,7 @@ namespace AjaxWebDemo.Models1
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.HasKey(e => e.Fid)
-                    .HasName("PK_Order");
+                entity.HasKey(e => e.Fid);
 
                 entity.Property(e => e.Fid).HasColumnName("fid");
 
@@ -266,16 +281,11 @@ namespace AjaxWebDemo.Models1
                     .HasDefaultValueSql("([dbo].[udf_get_serialno]())")
                     .IsFixedLength();
 
-                entity.Property(e => e.OrderPrefix)
-                    .HasMaxLength(3)
-                    .HasColumnName("Order_Prefix")
-                    .HasDefaultValueSql("(N'NP')");
-
                 entity.Property(e => e.OrderState).HasMaxLength(20);
 
                 entity.Property(e => e.OrderTime).HasColumnType("datetime");
 
-                entity.Property(e => e.PaymentTerm).HasMaxLength(20);
+                entity.Property(e => e.PayTermCatId).HasColumnName("PayTermCatID");
 
                 entity.Property(e => e.PickUpDate).HasColumnType("date");
 
@@ -293,7 +303,7 @@ namespace AjaxWebDemo.Models1
                     .HasMaxLength(10)
                     .HasColumnName("TaxIDNum");
 
-                entity.Property(e => e.TotalAmount).HasColumnType("numeric(18, 2)");
+                entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
@@ -302,17 +312,28 @@ namespace AjaxWebDemo.Models1
 
                 entity.ToTable("OrderDetail");
 
+                entity.Property(e => e.ItemId).HasMaxLength(10);
+
                 entity.Property(e => e.OptionFid).HasColumnName("Option_fid");
 
                 entity.Property(e => e.OptionGroupFid).HasColumnName("OptionGroup_fid");
-
-                entity.Property(e => e.OrderFid).HasColumnName("Order_fid");
 
                 entity.Property(e => e.ProductFid).HasColumnName("Product_fid");
 
                 entity.Property(e => e.ProductName).HasMaxLength(50);
 
-                entity.Property(e => e.UnitPrice).HasColumnType("numeric(18, 0)");
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 0)");
+            });
+
+            modelBuilder.Entity<OrderItem>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.ItemId)
+                    .HasMaxLength(10)
+                    .HasColumnName("itemID");
+
+                entity.Property(e => e.OrderFid).HasColumnName("Order_fid");
             });
 
             modelBuilder.Entity<OrderSerialNumber>(entity =>
@@ -327,34 +348,39 @@ namespace AjaxWebDemo.Models1
                     .IsFixedLength();
             });
 
-            modelBuilder.Entity<PaymentTerm>(entity =>
+            modelBuilder.Entity<PaymentTerm2BusiMember>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToTable("Payment_Term");
+                entity.ToTable("PaymentTerm2BusiMember");
 
                 entity.Property(e => e.BFid).HasColumnName("B_fid");
 
                 entity.Property(e => e.PayAmountLimit)
-                    .HasColumnType("numeric(18, 2)")
+                    .HasColumnType("decimal(18, 2)")
                     .HasColumnName("PayAmount_Limit");
 
-                entity.Property(e => e.PayTerm).HasMaxLength(50);
+                entity.Property(e => e.PayTermCatId).HasColumnName("PayTermCatID");
+            });
+
+            modelBuilder.Entity<PaymentTermCategory>(entity =>
+            {
+                entity.ToTable("PaymentTermCategory");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.PaymentType).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.HasKey(e => new { e.BFid, e.ProductName });
+                entity.HasKey(e => e.Fid);
+
+                entity.Property(e => e.Fid).HasColumnName("fid");
 
                 entity.Property(e => e.BFid).HasColumnName("B_fid");
 
-                entity.Property(e => e.ProductName).HasMaxLength(50);
-
                 entity.Property(e => e.CategoryFid).HasColumnName("Category_fid");
-
-                entity.Property(e => e.Fid)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("fid");
 
                 entity.Property(e => e.IsForSale).HasMaxLength(1);
 
@@ -364,7 +390,9 @@ namespace AjaxWebDemo.Models1
                     .HasMaxLength(50)
                     .HasColumnName("Menu_fid");
 
-                entity.Property(e => e.UnitPrice).HasColumnType("numeric(18, 2)");
+                entity.Property(e => e.ProductName).HasMaxLength(50);
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
             });
 
             modelBuilder.Entity<ProductCategory>(entity =>
@@ -395,8 +423,7 @@ namespace AjaxWebDemo.Models1
 
             modelBuilder.Entity<ProductOption>(entity =>
             {
-                entity.HasKey(e => e.Fid)
-                    .HasName("PK_Option");
+                entity.HasKey(e => e.Fid);
 
                 entity.Property(e => e.Fid).HasColumnName("fid");
 
@@ -406,15 +433,12 @@ namespace AjaxWebDemo.Models1
 
                 entity.Property(e => e.OptionName).HasMaxLength(50);
 
-                entity.Property(e => e.Qty).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.UnitPrice).HasColumnType("numeric(18, 2)");
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
             });
 
             modelBuilder.Entity<ProductOptionGroup>(entity =>
             {
-                entity.HasKey(e => e.Fid)
-                    .HasName("PK_OptionGroup");
+                entity.HasKey(e => e.Fid);
 
                 entity.ToTable("ProductOptionGroup");
 
@@ -422,11 +446,28 @@ namespace AjaxWebDemo.Models1
 
                 entity.Property(e => e.BFid).HasColumnName("B_fid");
 
-                entity.Property(e => e.Memo)
-                    .HasMaxLength(50)
-                    .HasDefaultValueSql("(N'-')");
+                entity.Property(e => e.Memo).HasMaxLength(50);
 
                 entity.Property(e => e.OptionGroupName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Sysdiagram>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("sysdiagrams");
+
+                entity.Property(e => e.Definition).HasColumnName("definition");
+
+                entity.Property(e => e.DiagramId).HasColumnName("diagram_id");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(128)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.PrincipalId).HasColumnName("principal_id");
+
+                entity.Property(e => e.Version).HasColumnName("version");
             });
 
             modelBuilder.Entity<ViewOptionsToGroup>(entity =>
@@ -447,7 +488,28 @@ namespace AjaxWebDemo.Models1
 
                 entity.Property(e => e.OptionName).HasMaxLength(50);
 
-                entity.Property(e => e.UnitPrice).HasColumnType("numeric(18, 2)");
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
+            });
+
+            modelBuilder.Entity<ViewOrderDetailList>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_OrderDetailList");
+
+                entity.Property(e => e.Itemid)
+                    .HasMaxLength(10)
+                    .HasColumnName("itemid");
+
+                entity.Property(e => e.ProductFId).HasColumnName("Product_fID");
+
+                entity.Property(e => e.ProductName).HasMaxLength(50);
+
+                entity.Property(e => e.SubTotal)
+                    .HasColumnType("decimal(38, 2)")
+                    .HasColumnName("subTotal");
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(38, 2)");
             });
 
             modelBuilder.Entity<ViewOrderDetailNonOptionGroupName>(entity =>
@@ -456,13 +518,21 @@ namespace AjaxWebDemo.Models1
 
                 entity.ToView("View_OrderDetail_NonOptionGroupName");
 
-                entity.Property(e => e.OrderFId).HasColumnName("Order_fID");
+                entity.Property(e => e.Itemid)
+                    .HasMaxLength(10)
+                    .HasColumnName("itemid");
+
+                entity.Property(e => e.OptionUp)
+                    .HasColumnType("decimal(38, 2)")
+                    .HasColumnName("OptionUP");
 
                 entity.Property(e => e.ProductFId).HasColumnName("Product_fID");
 
                 entity.Property(e => e.ProductName).HasMaxLength(50);
 
-                entity.Property(e => e.UnitPrice).HasColumnType("numeric(18, 2)");
+                entity.Property(e => e.ProductUp)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("ProductUP");
             });
 
             modelBuilder.Entity<ViewOrderDetailWithOptionGroupName>(entity =>
@@ -471,17 +541,25 @@ namespace AjaxWebDemo.Models1
 
                 entity.ToView("View_OrderDetail_with_OptionGroupName");
 
+                entity.Property(e => e.ItemId).HasMaxLength(10);
+
+                entity.Property(e => e.OUp)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("O_UP");
+
                 entity.Property(e => e.OptionGroupName).HasMaxLength(50);
 
                 entity.Property(e => e.OptionName).HasMaxLength(50);
 
                 entity.Property(e => e.OrderFid).HasColumnName("Order_fid");
 
+                entity.Property(e => e.PUnitPrice)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("P_UnitPrice");
+
                 entity.Property(e => e.ProductFid).HasColumnName("Product_fid");
 
                 entity.Property(e => e.ProductName).HasMaxLength(50);
-
-                entity.Property(e => e.UnitPrice).HasColumnType("numeric(18, 2)");
             });
 
             modelBuilder.Entity<ViewShowProductList>(entity =>
@@ -506,7 +584,7 @@ namespace AjaxWebDemo.Models1
 
                 entity.Property(e => e.ProductName).HasMaxLength(50);
 
-                entity.Property(e => e.UnitPrice).HasColumnType("numeric(18, 2)");
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
             });
 
             OnModelCreatingPartial(modelBuilder);

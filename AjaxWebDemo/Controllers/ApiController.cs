@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
 using System.Xml.Linq;
+using CoreAPI.Models;
 
 namespace AjaxWebDemo.Controllers
 {
@@ -17,12 +18,12 @@ namespace AjaxWebDemo.Controllers
             _db = db;
             _host = host;
         }
-        public IActionResult Index(string name)
+        public IActionResult Index(string name,int age=20)
         {
             //System.Threading.Thread.Sleep(7000);
             if (string.IsNullOrEmpty(name))
                 name = "Ajax";
-            return Content($"Hello,{name}","text/plain",Encoding.UTF8);
+            return Content($"Hello,{name}, you are {age}","text/plain",Encoding.UTF8);
         }
         public IActionResult NameCheck(string name)
         {
@@ -67,8 +68,8 @@ namespace AjaxWebDemo.Controllers
         public IActionResult Test()
         {
             iSpan_ProjectContext db = new iSpan_ProjectContext();
-            NormalMember m=new NormalMember();
-            m.MemberId = "test01";
+            Models1.NormalMember m = new Models1.NormalMember();
+            m.MemberName = DateTime.Now.ToString("yyyyMMddHHmmss");
             db.NormalMembers.Add(m);
             db.SaveChanges();
 

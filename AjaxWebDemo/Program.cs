@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using AjaxWebDemo.Models;
+using AjaxWebDemo.Models1;
+using CoreAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,14 @@ builder.Services.AddDbContext<DemoContext>(
     options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DemoConnection")
 ));
+builder.Services.AddDbContext<iSpan_ProjectContext>(
+    options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("iSpanConnection")
+));
+//builder.Services.AddDbContext<ispanMsit145shiba>(
+//    options => options.UseSqlServer(
+//    builder.Configuration.GetConnectionString("prjConnection")
+//));
 
 var app = builder.Build();
 

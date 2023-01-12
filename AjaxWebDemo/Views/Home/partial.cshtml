@@ -1,0 +1,18 @@
+﻿@model IEnumerable<AjaxWebDemo.Models.Member>
+@{
+    ViewData["Title"] = "partial";
+}
+
+<h1>@ViewBag.data</h1>
+<h2>hello</h2>
+<ul>
+    @{
+        foreach (Member member in Model)
+        {
+            <li>
+                @member.Name
+            </li>
+        }
+    }
+</ul>
+

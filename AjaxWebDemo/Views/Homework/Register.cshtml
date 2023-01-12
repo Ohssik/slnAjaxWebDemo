@@ -41,7 +41,8 @@
             </div>
            <div class="form-group">
                 <label  asp-for="FileName" class="control-label"></label>
-                <input name="file" class="form-control" type="file" />
+               <input name="file" class="form-control" type="file" />
+                
                 <span asp-validation-for="FileName" class="text-danger"></span>
             </div>
             @*
@@ -50,10 +51,12 @@
                 <input asp-for="FileData" class="form-control" />
                 <span asp-validation-for="FileData" class="text-danger"></span>
             </div>*@
+            <hr />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <br />
+                <p><input type="submit" value="Create by Ajax(XMLHttpRequest)" class="btn btn-primary" /></p>
+                
                 @*<input type="button" id="btnTest" value="測試" class="btn btn-primary" />*@
+                <p><input type="button" id="fetchBtn" value="Create by Ajax(fetch)" class="btn btn-primary" /></p>
             </div>
             <p id="p1"></p>
         </form>
@@ -80,6 +83,7 @@
         let checkResult = document.getElementById('checkResult');
         let p1 = document.getElementById('p1');
         let submit = document.querySelector('input[type="submit"]');
+        let fetchBtn = document.querySelector('#fetchBtn');
         let f = document.querySelector('form');
 
        let xhr=new XMLHttpRequest();
@@ -125,6 +129,29 @@
             xhr2.open('POST', `@Url.Content("~/api/checkFormData")`);
             xhr2.send(formData);
 
+        });
+
+        submit.addEventListener('click', (event) => {
+            event.preventDefault();
+            let formData = new FormData(document.regiForm);//formData要在click事件裡面宣告
+            console.log(f);
+            xhr2.open('POST', `@Url.Content("~/api/checkFormData")`);
+            xhr2.send(formData);
+
+        });
+
+        fetchBtn.addEventListener('click', async() => {
+            
+            let formData = new FormData(document.regiForm);//formData要在click事件裡面宣告
+            let f = await fetch(`@Url.Content("~/api/checkFormData")`,{
+                body:formData,
+                method:"post",
+                //headers:new Headers({
+                // 'Content-Type':'application/json'
+                //})
+            });
+            let r=await f.text();
+            p1.innerHTML=r;
         });
 
         //let btnTest = document.getElementById('btnTest');
